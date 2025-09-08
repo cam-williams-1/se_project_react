@@ -1,0 +1,19 @@
+import "./Header.css";
+import headerLogo from "../../assets/wtwr.svg";
+import userIcon from "../../assets/user.svg";
+
+function Header() {
+  return (
+    <header className="header">
+      <img src={headerLogo} alt="App Logo" className="header__logo" />
+      <p className="header__date-location">date, location</p>
+      <button className="header__add-btn">+ Add clothes</button>
+      <div className="header__user">
+        <p className="header__user_name">user name</p>
+        <img src={userIcon} alt="User Icon" className="header__user_icon" />
+      </div>
+    </header>
+  );
+}
+
+export default Header;
