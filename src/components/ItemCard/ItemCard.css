@@ -1,3 +1,29 @@
-function ItemCard() {
-    return;
+.card {
+  width: 323px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 10px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+.card__name {
+  font-family: "Cabinet Grotesk";
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.6);
+  line-height: 20px;
+  padding: 2px 12px;
+  background: #fff;
+  border-radius: 4px;
+  position: absolute;
+  margin: 0;
+  top: 15px;
+}
+
+.card__img {
+  width: 100%;
 }
