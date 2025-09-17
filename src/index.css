@@ -1,16 +1,16 @@
 @import url(./vendor/normalize.css);
 @font-face {
-  src: url("../src/assets/CabinetGrotesk-Extrabold.woff") format("woff");
+  src: url("../src/vendor/CabinetGrotesk-Extrabold.woff") format("woff");
   font-family: "Cabinet Grotesk";
   font-weight: 700;
 }
 @font-face {
-  src: url("../src/assets/CabinetGrotesk-Medium.woff") format("woff");
+  src: url("../src/vendor/CabinetGrotesk-Medium.woff") format("woff");
   font-family: "Cabinet Grotesk";
   font-weight: 500;
 }
 @font-face {
-  src: url("../src/assets/CabinetGrotesk-Bold.woff") format("woff");
+  src: url("../src/vendor/CabinetGrotesk-Bold.woff") format("woff");
   font-family: "Cabinet Grotesk";
   font-weight: 700;
 }

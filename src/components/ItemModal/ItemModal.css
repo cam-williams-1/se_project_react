@@ -1,0 +1,29 @@
+.modal__content_type_img {
+  padding: 0;
+  overflow: hidden;
+}
+
+.modal__img {
+  width: 100%;
+}
+
+.modal__caption {
+  font-family: "Cabinet Grotesk";
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  margin: 0;
+  padding-top: 20px;
+  padding-left: 32px;
+  padding-bottom: 12px;
+}
+
+.modal__weather {
+  font-family: "Cabinet Grotesk";
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  margin: 0;
+  padding-left: 32px;
+  padding-bottom: 32px;
+}
