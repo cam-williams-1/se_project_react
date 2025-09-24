@@ -15,6 +15,6 @@
 
 ### Visuals
 
-![Home Page](./src/assets/wtwr-home.svg)
+![Home Page](./src/assets/wtwr-home.png)
 
 #### More to come as I continue to improve this application!
