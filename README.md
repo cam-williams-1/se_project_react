@@ -11,7 +11,7 @@
 
 ### How to run it
 
-- I will be adding this to Github pages in teh future, with the link to follow soon!
+- I will be adding this to Github pages in the future, with the link to follow soon!
 
 ### Visuals
 

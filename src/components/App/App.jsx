@@ -33,6 +33,12 @@ function App() {
     setActiveModal("");
   };
 
+  const handleEscapeClose = (e) => {
+    if (e.key === "Escape") {
+      closeActiveModal();
+    }
+  };
+
   useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((data) => {
@@ -42,6 +48,8 @@ function App() {
       .catch(console.error);
   }, []);
   // the empty array at the end ensures this Effect will call on page load
+
+  document.addEventListener("keydown", handleEscapeClose);
 
   return (
     <div className="page">
@@ -57,7 +65,7 @@ function App() {
       <ModalWithForm
         title="New garment"
         buttonText="Add garment"
-        activeModal={activeModal}
+        isOpen={activeModal === "add-garment"}
         closeActiveModal={closeActiveModal}
       >
         <label htmlFor="name" className="modal__label">
@@ -84,7 +92,9 @@ function App() {
             <input
               id="hot"
               type="radio"
-              className="modal__radio modal__radio-hot"
+              name="weatherType"
+              className="modal__radio-input"
+              value="hot"
             />{" "}
             Hot
           </label>
@@ -95,7 +105,9 @@ function App() {
             <input
               id="warm"
               type="radio"
-              className="modal__radio modal__radio-warm"
+              name="weatherType"
+              className="modal__radio-input"
+              value="warm"
             />{" "}
             Warm
           </label>
@@ -106,7 +118,9 @@ function App() {
             <input
               id="cold"
               type="radio"
-              className="modal__radio modal__radio-cold"
+              name="weatherType"
+              className="modal__radio-input"
+              value="cold"
             />{" "}
             Cold
           </label>
