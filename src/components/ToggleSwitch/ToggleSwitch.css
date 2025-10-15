@@ -1,0 +1,60 @@
+.toggle-switch {
+  position: relative; /* to position the toggle circle */
+  width: 56px;
+  height: 28px;
+  border: 2px solid #7e7e7e;
+  border-radius: 20px;
+  margin-left: 665px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.toggle-switch:hover {
+  border: 2px solid #000;
+}
+
+.toggle-switch__checkbox {
+  /* ensures accessibility will work (instead of visibility none) */
+  opacity: 0;
+}
+
+.toggle-switch__checkbox:checked ~ .toggle-switch__circle {
+  left: 28px;
+}
+
+.toggle-switch__checkbox:checked ~ .toggle-switch__txt_C {
+  color: #fff;
+}
+
+.toggle-switch__checkbox:checked ~ .toggle-switch__txt_F {
+  color: #7e7e7e;
+}
+
+.toggle-switch__circle {
+  position: absolute;
+  left: 0;
+  background-color: black;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  transition: 0.5s;
+}
+
+.toggle-switch__txt {
+  position: absolute;
+  color: #fff;
+  font-family: "Cabinet Grotesk";
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.toggle-switch__txt_F {
+  top: 7px;
+  left: 10px;
+}
+
+.toggle-switch__txt_C {
+  top: 7px;
+  right: 8px;
+  color: #7e7e7e;
+}
