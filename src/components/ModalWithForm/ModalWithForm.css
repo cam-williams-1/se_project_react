@@ -107,3 +107,7 @@
   border: none;
   border-radius: 4px;
 }
+
+.modal__submit-btn:hover {
+  background-color: #000;
+}
