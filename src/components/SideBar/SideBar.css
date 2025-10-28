@@ -1,0 +1,20 @@
+.sidebar {
+  width: 229px;
+}
+
+.sidebar__user {
+  display: flex;
+  gap: 16px;
+}
+
+.sidebar__user_icon {
+  width: 56px;
+  height: 56px;
+}
+
+.sidebar__user_name {
+  width: 157px;
+  font-family: "Cabinet Grotesk";
+  font-weight: 700;
+  font-size: 20px;
+}
