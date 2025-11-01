@@ -1,6 +1,12 @@
 .modal__content_type_img {
   padding: 0;
   overflow: hidden;
+  position: relative;
+  background-color: #fff;
+  width: 496px;
+  max-width: 100%;
+  box-sizing: border-box;
+  border-radius: 20px;
 }
 
 .modal__img {

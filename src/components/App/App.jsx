@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import "./App.css";
-import { coordinates, APIkey } from "../../utils/constants";
 // for more sensitive applications, storing the APIkey here is a security risk
+import { coordinates, APIkey } from "../../utils/constants";
+import { getWeather, filterWeatherData } from "../../utils/weatherApi";
+import { getItems, addItem, removeItem } from "../../utils/api.js";
 
+import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
@@ -11,15 +13,11 @@ import ItemModal from "../ItemModal/ItemModal";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile.jsx";
 
-import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-// temporary until API is set up
-import { defaultClothingItems } from "../../utils/constants.js";
-
 // Contexts
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit.jsx";
 
 function App() {
-  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
+  const [clothingItems, setClothingItems] = useState([]);
   const [weatherData, setWeatherData] = useState({
     type: "",
     temp: { F: 999, C: 999 },
@@ -27,6 +25,7 @@ function App() {
     condition: "",
     isDay: true, // need to refactor for night
   });
+
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -51,11 +50,17 @@ function App() {
   const onAddItem = (inputValues) => {
     const newCardData = {
       name: inputValues.name,
-      link: inputValues.link,
+      imageUrl: inputValues.imageUrl,
       weather: inputValues.weatherType,
     };
-    setClothingItems([...clothingItems, newCardData]);
-    closeActiveModal();
+
+    addItem(newCardData)
+      .then((data) => {
+        // passing data to state so that it includes the id created from the DB
+        setClothingItems([data, ...clothingItems]);
+        closeActiveModal();
+      })
+      .catch(console.error);
   };
 
   const closeActiveModal = () => {
@@ -68,6 +73,19 @@ function App() {
     }
   };
 
+  const deleteItemHandler = (item) => {
+    const filteredArr = clothingItems.filter((clothingItem) => {
+      return clothingItem._id !== item._id;
+    });
+
+    removeItem(item._id)
+      .then(() => {
+        setClothingItems(filteredArr);
+        closeActiveModal();
+      })
+      .catch(console.error);
+  };
+
   useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((data) => {
@@ -75,8 +93,13 @@ function App() {
         setWeatherData(filteredData);
       })
       .catch(console.error);
-  }, []);
-  // this empty array ensures the Effect will call on page load
+
+    getItems()
+      .then((data) => {
+        setClothingItems(data.reverse());
+      })
+      .catch(console.error);
+  }, []); // empty array ensures useEffect will call on page load
 
   document.addEventListener("keydown", handleEscapeClose);
 
@@ -103,6 +126,7 @@ function App() {
               path="/profile"
               element={
                 <Profile
+                  weatherData={weatherData}
                   handleCardClick={handleCardClick}
                   clothingItems={clothingItems}
                 />
@@ -121,6 +145,7 @@ function App() {
           activeModal={activeModal}
           card={selectedCard}
           closeActiveModal={closeActiveModal}
+          deleteItemHandler={deleteItemHandler}
         />
       </div>
     </CurrentTemperatureUnitContext.Provider>
