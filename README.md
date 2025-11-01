@@ -17,4 +17,7 @@
 
 ![Home Page](./src/assets/wtwr-home.png)
 
-#### More to come as I continue to improve this application!
+#### Project Pitch Video
+
+- Here's a short video explaining the functionality of the application and how I created it.
+  -(https://drive.google.com/file/d/1wuWQG0PPqUct55Z6HyYJ7SZLHXo3yOn7/view?usp=sharing)
