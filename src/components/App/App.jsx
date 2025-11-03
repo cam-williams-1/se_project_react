@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-// for more sensitive applications, storing the APIkey here is a security risk
-import { coordinates, APIkey } from "../../utils/constants";
+// for more sensitive applications, storing the apiKey here is a security risk
+import { coordinates, apiKey } from "../../utils/constants";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { getItems, addItem, removeItem } from "../../utils/api.js";
 
@@ -67,12 +67,6 @@ function App() {
     setActiveModal("");
   };
 
-  const handleEscapeClose = (e) => {
-    if (e.key === "Escape") {
-      closeActiveModal();
-    }
-  };
-
   const deleteItemHandler = (item) => {
     const filteredArr = clothingItems.filter((clothingItem) => {
       return clothingItem._id !== item._id;
@@ -87,7 +81,7 @@ function App() {
   };
 
   useEffect(() => {
-    getWeather(coordinates, APIkey)
+    getWeather(coordinates, apiKey)
       .then((data) => {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
@@ -101,7 +95,18 @@ function App() {
       .catch(console.error);
   }, []); // empty array ensures useEffect will call on page load
 
-  document.addEventListener("keydown", handleEscapeClose);
+  useEffect(() => {
+    if (!activeModal) return; // only adds listener is modal is active
+
+    const onEsc = (e) => {
+      if (e.key === "Escape") closeActiveModal();
+    };
+
+    document.addEventListener("keydown", onEsc);
+
+    // removes the listener when effect cleans up
+    return () => document.removeEventListener("keydown", onEsc);
+  }, [activeModal, closeActiveModal]); // Only re-run when these values change
 
   return (
     // Wrapping the entire JSX app so everything has this context
@@ -128,6 +133,7 @@ function App() {
                 <Profile
                   weatherData={weatherData}
                   handleCardClick={handleCardClick}
+                  handleAddClick={handleAddClick}
                   clothingItems={clothingItems}
                 />
               }

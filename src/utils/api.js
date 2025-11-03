@@ -1,44 +1,36 @@
-const baseURL = "http://localhost:3001";
+const baseUrl = "http://localhost:3001";
 
 const headers = {
   "Content-Type": "application/json",
 };
 
+export function checkResponse(res) {
+  if (res.ok) {
+    return res.json();
+  } else {
+    return Promise.reject(`Error: ${res.status}`);
+  }
+}
+
 export const getItems = () => {
-  return fetch(`${baseURL}/items`, { method: "GET", headers }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Error: ${res.status}`);
-    }
-  });
+  return fetch(`${baseUrl}/items`, { method: "GET", headers }).then(
+    checkResponse
+  );
 };
 
 export const addItem = ({ name, imageUrl, weather }) => {
-  return fetch(`${baseURL}/items`, {
+  return fetch(`${baseUrl}/items`, {
     method: "POST",
     headers,
     body: JSON.stringify({ name, imageUrl, weather }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Error: ${res.status}`);
-    }
-  });
+  }).then(checkResponse);
 };
 
 export const removeItem = (itemID) => {
-  return fetch(`${baseURL}/items/${itemID}`, {
+  return fetch(`${baseUrl}/items/${itemID}`, {
     method: "DELETE",
     headers,
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Error: ${res.status}`);
-    }
-  });
+  }).then(checkResponse);
 };
 
 // This is the command to run the json server locally...

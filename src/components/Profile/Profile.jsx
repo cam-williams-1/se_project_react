@@ -6,6 +6,7 @@ export default function Profile({
   clothingItems,
   handleCardClick,
   weatherData,
+  handleAddClick,
 }) {
   return (
     <section className="profile">
@@ -13,6 +14,7 @@ export default function Profile({
       <ClothesSection
         handleCardClick={handleCardClick}
         clothingItems={clothingItems}
+        handleAddClick={handleAddClick}
       />
     </section>
   );
