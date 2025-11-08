@@ -16,6 +16,11 @@ export const filterWeatherData = (data) => {
   };
   result.type = getWeatherType(result.temp.F);
 
+  // consists of: rain, snow, clouds, storm, clear
+  result.condition = data.weather[0].main;
+
+  result.isDay = data.dt >= data.sys.sunrise && data.dt < data.sys.sunset;
+
   return result;
 };
 

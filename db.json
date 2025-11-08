@@ -101,12 +101,6 @@
       "name": "T-Shirt",
       "weather": "hot",
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/T-Shirt.png?etag=44ed1963c44ab19cd2f5011522c5fc09"
-    },
-    {
-      "name": "Beanie ",
-      "imageUrl": "https://media.istockphoto.com/id/1962420153/photo/mustard-yellow-knit-beanie-isolated-on-white.jpg?s=612x612&w=0&k=20&c=psolNq1Gbt9sjZPSItfkvuQSGXcdZReQfiJ3v2QW9gU=",
-      "weather": "cold",
-      "_id": 17
     }
   ]
 }

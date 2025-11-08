@@ -23,7 +23,7 @@ function App() {
     temp: { F: 999, C: 999 },
     city: "",
     condition: "",
-    isDay: true, // need to refactor for night
+    isDay: true,
   });
 
   const [activeModal, setActiveModal] = useState("");
