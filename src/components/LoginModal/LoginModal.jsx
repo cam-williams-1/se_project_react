@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "../../hooks/useForm";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
@@ -8,13 +8,13 @@ const LoginModal = ({ isOpen, onLogin, closeActiveModal }) => {
     password: "",
   });
   // values are from state and function from useForm.js
-  const { values, handleChange, setValues } = useForm(defaultValues);
+  const { values, handleChange, setValues } = useForm(formData);
 
-  useEffect(() => {
-    if (isOpen) {
-      setValues(defaultValues);
-    }
-  }, [isOpen]);
+  // useEffect(() => {
+  //   if (isOpen) {
+  //     setValues(defaultValues);
+  //   }
+  // }, [isOpen]);
 
   function handleSubmit(evt) {
     evt.preventDefault();

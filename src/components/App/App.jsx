@@ -12,11 +12,15 @@ import Footer from "../Footer/Footer";
 import ItemModal from "../ItemModal/ItemModal";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile.jsx";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
+import RegisterModal from "../RegisterModal/RegisterModal.jsx";
+import LoginModal from "../LoginModal/LoginModal.jsx";
 
 import { signUp, signIn, checkToken } from "../../utils/auth.js";
 
 // Contexts
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit.jsx";
+import CurrentUserContext from "../../contexts/CurrentUser.jsx";
 
 function App() {
   const [clothingItems, setClothingItems] = useState([]);
@@ -28,6 +32,8 @@ function App() {
     isDay: true,
   });
 
+  // All React State Variables
+  const [currentUser, setCurrentUser] = useState({});
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -73,6 +79,14 @@ function App() {
 
   const handleAddClick = () => {
     setActiveModal("add-garment");
+  };
+
+  const registerClick = () => {
+    setActiveModal("register");
+  };
+
+  const loginClick = () => {
+    setActiveModal("login");
   };
 
   const onAddItem = (inputValues) => {
@@ -160,59 +174,66 @@ function App() {
     <CurrentTemperatureUnitContext.Provider
       value={{ currentTemperatureUnit, handleToggleSwitchChange }}
     >
-      <div className="page">
-        <div className="page__content">
-          <Header handleAddClick={handleAddClick} weatherData={weatherData} />
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Main
-                  weatherData={weatherData}
-                  handleCardClick={handleCardClick}
-                  clothingItems={clothingItems}
-                />
-              }
+      <CurrentUserContext.Provider value={currentUser}>
+        <div className="page">
+          <div className="page__content">
+            <Header
+              handleAddClick={handleAddClick}
+              weatherData={weatherData}
+              registerClick={registerClick}
+              loginClick={loginClick}
             />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute isLoggedIn={isLoggedIn}>
-                  <Profile
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Main
                     weatherData={weatherData}
                     handleCardClick={handleCardClick}
-                    handleAddClick={handleAddClick}
                     clothingItems={clothingItems}
                   />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute isLoggedIn={isLoggedIn}>
+                    <Profile
+                      weatherData={weatherData}
+                      handleCardClick={handleCardClick}
+                      handleAddClick={handleAddClick}
+                      clothingItems={clothingItems}
+                    />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
 
-          <Footer />
+            <Footer />
+          </div>
+          <AddItemModal
+            isOpen={activeModal === "add-garment"}
+            closeActiveModal={closeActiveModal}
+            onAddItem={onAddItem}
+          ></AddItemModal>
+          <ItemModal
+            activeModal={activeModal}
+            card={selectedCard}
+            closeActiveModal={closeActiveModal}
+            deleteItemHandler={deleteItemHandler}
+          />
+          <RegisterModal
+            isOpen={activeModal === "register"}
+            onClose={closeActiveModal}
+            onRegister={handleRegister} // Pass the function here
+          />
+          <LoginModal
+            isOpen={activeModal === "login"}
+            onClose={closeActiveModal}
+            onLogin={handleLogin} // Pass the function here
+          />
         </div>
-        <AddItemModal
-          isOpen={activeModal === "add-garment"}
-          closeActiveModal={closeActiveModal}
-          onAddItem={onAddItem}
-        ></AddItemModal>
-        <ItemModal
-          activeModal={activeModal}
-          card={selectedCard}
-          closeActiveModal={closeActiveModal}
-          deleteItemHandler={deleteItemHandler}
-        />
-        <RegisterModal
-          isOpen={activeModal === "register"}
-          onClose={closeAllModals}
-          onRegister={handleRegister} // Pass the function here
-        />
-        <LoginModal
-          isOpen={activeModal === "login"}
-          onClose={closeAllModals}
-          onLogin={handleLogin} // Pass the function here
-        />
-      </div>
+      </CurrentUserContext.Provider>
     </CurrentTemperatureUnitContext.Provider>
   );
 }

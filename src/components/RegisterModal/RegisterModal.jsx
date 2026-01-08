@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-// import { useForm } from "../../hooks/useForm";
+import { useEffect, useState } from "react";
+import { useForm } from "../../hooks/useForm";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 const RegisterModal = ({ isOpen, onRegister, closeActiveModal }) => {
@@ -11,13 +11,13 @@ const RegisterModal = ({ isOpen, onRegister, closeActiveModal }) => {
   });
 
   // values are from state and function from useForm.js
-  const { values, handleChange, setValues } = useForm(defaultValues);
+  const { values, handleChange, setValues } = useForm(formData);
 
-  useEffect(() => {
-    if (isOpen) {
-      setValues(defaultValues);
-    }
-  }, [isOpen]);
+  // useEffect(() => {
+  //   if (isOpen) {
+  //     setValues(defaultValues);
+  //   }
+  // }, [isOpen]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
