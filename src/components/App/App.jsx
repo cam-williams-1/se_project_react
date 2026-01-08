@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 // for more sensitive applications, storing the apiKey here is a security risk
 import { coordinates, apiKey } from "../../utils/constants";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
@@ -12,6 +12,8 @@ import Footer from "../Footer/Footer";
 import ItemModal from "../ItemModal/ItemModal";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile.jsx";
+
+import { signUp, signIn, checkToken } from "../../utils/auth.js";
 
 // Contexts
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit.jsx";
@@ -29,6 +31,32 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Auth Logic
+  const handleRegister = ({ name, avatar, email, password }) => {
+    signUp({ name, avatar, email, password })
+      .then(() => {
+        closeActiveModal();
+        handleLogin({ email, password });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  const handleLogin = ({ email, password }) => {
+    signIn({ email, password })
+      .then(() => {
+        if (res.token) {
+          localStorage.setItem("jwt", res.token);
+          setIsLoggedIn(true);
+          setCurrentUser(res.user);
+          closeActiveModal();
+        }
+      })
+      .catch(console.error);
+  };
 
   const handleToggleSwitchChange = () => {
     if (currentTemperatureUnit === "F") {
@@ -80,6 +108,24 @@ function App() {
       .catch(console.error);
   };
 
+  // On page load, check for token to login user auto
+  useEffect(() => {
+    const token = localStorage.getItem("jwt");
+
+    if (token) {
+      checkToken(token)
+        .then(() => {
+          setIsLoggedIn(true);
+          setCurrentUser(user);
+        })
+        .catch((error) => {
+          // Token is invalid or expired
+          console.error("Token validation failed:", error);
+          localStorage.removeItem("jwt"); // Clean up invalid token
+        });
+    }
+  }, []);
+
   useEffect(() => {
     getWeather(coordinates, apiKey)
       .then((data) => {
@@ -96,7 +142,8 @@ function App() {
   }, []); // empty array ensures useEffect will call on page load
 
   useEffect(() => {
-    if (!activeModal) return; // only adds listener is modal is active
+    // only adds listener is modal is active
+    if (!activeModal) return;
 
     const onEsc = (e) => {
       if (e.key === "Escape") closeActiveModal();
@@ -130,12 +177,14 @@ function App() {
             <Route
               path="/profile"
               element={
-                <Profile
-                  weatherData={weatherData}
-                  handleCardClick={handleCardClick}
-                  handleAddClick={handleAddClick}
-                  clothingItems={clothingItems}
-                />
+                <ProtectedRoute isLoggedIn={isLoggedIn}>
+                  <Profile
+                    weatherData={weatherData}
+                    handleCardClick={handleCardClick}
+                    handleAddClick={handleAddClick}
+                    clothingItems={clothingItems}
+                  />
+                </ProtectedRoute>
               }
             />
           </Routes>
@@ -152,6 +201,16 @@ function App() {
           card={selectedCard}
           closeActiveModal={closeActiveModal}
           deleteItemHandler={deleteItemHandler}
+        />
+        <RegisterModal
+          isOpen={activeModal === "register"}
+          onClose={closeAllModals}
+          onRegister={handleRegister} // Pass the function here
+        />
+        <LoginModal
+          isOpen={activeModal === "login"}
+          onClose={closeAllModals}
+          onLogin={handleLogin} // Pass the function here
         />
       </div>
     </CurrentTemperatureUnitContext.Provider>
