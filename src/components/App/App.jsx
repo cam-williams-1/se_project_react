@@ -15,8 +15,9 @@ import Profile from "../Profile/Profile.jsx";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import RegisterModal from "../RegisterModal/RegisterModal.jsx";
 import LoginModal from "../LoginModal/LoginModal.jsx";
+import EditProfileModal from "../EditProfileModal/EditProfileModal.jsx";
 
-import { signUp, signIn, checkToken } from "../../utils/auth.js";
+import { signUp, signIn, checkToken, updateProfile } from "../../utils/auth.js";
 
 // Contexts
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit.jsx";
@@ -43,7 +44,7 @@ function App() {
   const handleRegister = ({ name, avatar, email, password }) => {
     signUp({ name, avatar, email, password })
       .then(() => {
-        closeActiveModal();
+        // After successful registration, immediately log in
         handleLogin({ email, password });
       })
       .catch((error) => {
@@ -53,15 +54,38 @@ function App() {
 
   const handleLogin = ({ email, password }) => {
     signIn({ email, password })
-      .then(() => {
+      .then((res) => {
         if (res.token) {
           localStorage.setItem("jwt", res.token);
           setIsLoggedIn(true);
           setCurrentUser(res.user);
           closeActiveModal();
+        } else {
+          throw new Error("No token returned from server");
         }
       })
       .catch(console.error);
+  };
+
+  const handleUpdateUser = ({ name, avatar }) => {
+    const token = localStorage.getItem("jwt");
+
+    updateProfile({ name, avatar }, token)
+      .then((updatedUser) => {
+        setCurrentUser(updatedUser);
+        closeActiveModal();
+      })
+      .catch((error) => {
+        console.error("Profile update failed:", error);
+      });
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("jwt");
+    setIsLoggedIn(false);
+    setCurrentUser({});
+    setClothingItems([]);
+    closeActiveModal();
   };
 
   const handleToggleSwitchChange = () => {
@@ -128,9 +152,9 @@ function App() {
 
     if (token) {
       checkToken(token)
-        .then(() => {
-          setIsLoggedIn(true);
+        .then((user) => {
           setCurrentUser(user);
+          setIsLoggedIn(true);
         })
         .catch((error) => {
           // Token is invalid or expired
@@ -182,6 +206,8 @@ function App() {
               weatherData={weatherData}
               registerClick={registerClick}
               loginClick={loginClick}
+              handleLogout={handleLogout}
+              isLoggedIn={isLoggedIn}
             />
             <Routes>
               <Route
@@ -233,6 +259,11 @@ function App() {
             onLogin={handleLogin} // Pass the function here
           />
         </div>
+        <EditProfileModal
+          isOpen={activeModal === "edit-profile"}
+          onClose={closeActiveModal}
+          onUpdateUser={handleUpdateUser}
+        />
       </CurrentUserContext.Provider>
     </CurrentTemperatureUnitContext.Provider>
   );

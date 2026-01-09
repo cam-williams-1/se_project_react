@@ -10,8 +10,8 @@ export function checkResponse(res) {
 
 // authentication API calls
 
-export const signUp = () => {
-  fetch(`${baseUrl}/signup`, {
+export const signUp = ({ name, avatar, email, password }) => {
+  return fetch(`${baseUrl}/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -20,8 +20,8 @@ export const signUp = () => {
   }).then(checkResponse);
 };
 
-export const signIn = () => {
-  fetch(`${baseUrl}/signin`, {
+export const signIn = ({ email, password }) => {
+  return fetch(`${baseUrl}/signin`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -37,10 +37,16 @@ export const checkToken = (token) => {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
-  }).then((response) => {
-    if (response.ok) {
-      return response.json();
-    }
-    return Promise.reject(`Error: ${response.status}`);
-  });
+  }).then(checkResponse);
+};
+
+export const updateProfile = ({ name, avatar }, token) => {
+  return fetch(`${baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ name, avatar }),
+  }).then(checkResponse);
 };

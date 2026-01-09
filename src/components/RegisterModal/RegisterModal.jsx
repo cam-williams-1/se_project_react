@@ -21,7 +21,7 @@ const RegisterModal = ({ isOpen, onRegister, closeActiveModal }) => {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onRegister(formData);
+    onRegister(values);
   }
 
   // TODO
@@ -85,7 +85,7 @@ const RegisterModal = ({ isOpen, onRegister, closeActiveModal }) => {
           className="modal__input"
           id="avatar"
           placeholder="Avatar URL"
-          value={values.imageUrl}
+          value={values.avatar}
           onChange={handleChange}
         />
       </label>

@@ -18,7 +18,7 @@ const LoginModal = ({ isOpen, onLogin, closeActiveModal }) => {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onLogin(formData);
+    onLogin(values);
   }
 
   // TODO

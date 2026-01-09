@@ -9,15 +9,21 @@ import LoginModal from "../LoginModal/LoginModal.jsx";
 
 import CurrentUserContext from "../../contexts/CurrentUser.jsx";
 
-function Header({ handleAddClick, weatherData, registerClick, loginClick }) {
+function Header({
+  handleAddClick,
+  weatherData,
+  registerClick,
+  loginClick,
+  handleLogout,
+  isLoggedIn,
+}) {
   const currentUser = useContext(CurrentUserContext);
+  const userName = currentUser?.name;
+  console.log("[Header] currentUser:", currentUser);
 
   const firstLetter = currentUser?.name?.charAt(0).toUpperCase() || "?";
 
-  const avatarSet = !!currentUser.avatar;
-
-  // checks is user is logged in
-  const isLoggedIn = !!currentUser;
+  const avatarSet = !!currentUser?.avatar;
 
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
@@ -44,7 +50,7 @@ function Header({ handleAddClick, weatherData, registerClick, loginClick }) {
           </button>
           <NavLink className="header__nav-link" to="/profile">
             <div className="header__user">
-              <p className="header__user_name">Hello, {currentUser.name}!</p>
+              <p className="header__user_name">Hello, {userName}!</p>
               <img
                 src={avatarSet ? userIcon : firstLetter}
                 alt="User Icon"
@@ -52,6 +58,13 @@ function Header({ handleAddClick, weatherData, registerClick, loginClick }) {
               />
             </div>
           </NavLink>
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="header__logout"
+          >
+            Log Out
+          </button>
         </>
       ) : (
         <>
