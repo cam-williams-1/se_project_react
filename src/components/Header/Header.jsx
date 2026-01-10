@@ -16,10 +16,10 @@ function Header({
   loginClick,
   handleLogout,
   isLoggedIn,
+  onEditProfile, // for editing profile.. not sure where to implement yet
 }) {
   const currentUser = useContext(CurrentUserContext);
   const userName = currentUser?.name;
-  console.log("[Header] currentUser:", currentUser);
 
   const firstLetter = currentUser?.name?.charAt(0).toUpperCase() || "?";
 
@@ -58,13 +58,6 @@ function Header({
               />
             </div>
           </NavLink>
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="header__logout"
-          >
-            Log Out
-          </button>
         </>
       ) : (
         <>

@@ -29,6 +29,7 @@ export const getItems = () => {
 };
 
 export const addItem = ({ name, imageUrl, weather }) => {
+  const token = localStorage.getItem("jwt");
   return fetch(`${baseUrl}/items`, {
     method: "POST",
     headers: getHeaders(token),
@@ -37,7 +38,24 @@ export const addItem = ({ name, imageUrl, weather }) => {
 };
 
 export const removeItem = (itemID) => {
+  const token = localStorage.getItem("jwt");
   return fetch(`${baseUrl}/items/${itemID}`, {
+    method: "DELETE",
+    headers: getHeaders(token),
+  }).then(checkResponse);
+};
+
+// Add a like to a clothing item
+export const addCardLike = (itemId, token) => {
+  return fetch(`${baseUrl}/items/${itemId}/likes`, {
+    method: "PUT",
+    headers: getHeaders(token),
+  }).then(checkResponse);
+};
+
+// Remove a like from a clothing item
+export const removeCardLike = (itemId, token) => {
+  return fetch(`${baseUrl}/items/${itemId}/likes`, {
     method: "DELETE",
     headers: getHeaders(token),
   }).then(checkResponse);

@@ -7,14 +7,18 @@ export default function Profile({
   handleCardClick,
   weatherData,
   handleAddClick,
+  onEditProfile,
+  handleLogout,
+  onCardLike,
 }) {
   return (
     <section className="profile">
-      <SideBar />
+      <SideBar onEditProfile={onEditProfile} handleLogout={handleLogout} />
       <ClothesSection
         handleCardClick={handleCardClick}
         clothingItems={clothingItems}
         handleAddClick={handleAddClick}
+        onCardLike={onCardLike}
       />
     </section>
   );

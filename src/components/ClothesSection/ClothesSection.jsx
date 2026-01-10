@@ -8,6 +8,7 @@ export default function ClothesSection({
   handleCardClick,
   handleAddClick,
   clothingItems,
+  onCardLike,
 }) {
   const currentUser = useContext(CurrentUserContext);
   // Only show items owned by the current user
@@ -30,6 +31,7 @@ export default function ClothesSection({
             key={item._id}
             item={item}
             handleCardClick={handleCardClick}
+            onCardLike={onCardLike}
           />
         ))}
       </ul>

@@ -3,7 +3,13 @@ import { Routes, Route, Navigate } from "react-router-dom";
 // for more sensitive applications, storing the apiKey here is a security risk
 import { coordinates, apiKey } from "../../utils/constants";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-import { getItems, addItem, removeItem } from "../../utils/api.js";
+import {
+  getItems,
+  addItem,
+  removeItem,
+  addCardLike,
+  removeCardLike,
+} from "../../utils/api.js";
 
 import "./App.css";
 import Header from "../Header/Header";
@@ -80,6 +86,10 @@ function App() {
       });
   };
 
+  const handleEditProfile = () => {
+    setActiveModal("edit-profile");
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
@@ -99,6 +109,27 @@ function App() {
   const handleCardClick = (card) => {
     setActiveModal("preview");
     setSelectedCard(card);
+  };
+
+  const handleCardLike = ({ id, isLiked }) => {
+    const token = localStorage.getItem("jwt");
+    if (!isLiked) {
+      addCardLike(id, token)
+        .then((updatedCard) => {
+          setClothingItems((cards) =>
+            cards.map((item) => (item._id === id ? updatedCard : item))
+          );
+        })
+        .catch((err) => console.log(err));
+    } else {
+      removeCardLike(id, token)
+        .then((updatedCard) => {
+          setClothingItems((cards) =>
+            cards.map((item) => (item._id === id ? updatedCard : item))
+          );
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   const handleAddClick = () => {
@@ -206,7 +237,6 @@ function App() {
               weatherData={weatherData}
               registerClick={registerClick}
               loginClick={loginClick}
-              handleLogout={handleLogout}
               isLoggedIn={isLoggedIn}
             />
             <Routes>
@@ -217,6 +247,7 @@ function App() {
                     weatherData={weatherData}
                     handleCardClick={handleCardClick}
                     clothingItems={clothingItems}
+                    onCardLike={handleCardLike}
                   />
                 }
               />
@@ -229,6 +260,9 @@ function App() {
                       handleCardClick={handleCardClick}
                       handleAddClick={handleAddClick}
                       clothingItems={clothingItems}
+                      onEditProfile={handleEditProfile}
+                      handleLogout={handleLogout}
+                      onCardLike={handleCardLike}
                     />
                   </ProtectedRoute>
                 }
