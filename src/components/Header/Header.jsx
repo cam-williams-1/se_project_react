@@ -4,22 +4,20 @@ import "./Header.css";
 import headerLogo from "../../assets/wtwr.svg";
 import userIcon from "../../assets/user.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
-import RegisterModal from "../RegisterModal/RegisterModal.jsx";
-import LoginModal from "../LoginModal/LoginModal.jsx";
 
 import CurrentUserContext from "../../contexts/CurrentUser.jsx";
 
 function Header({
   handleAddClick,
   weatherData,
-  registerClick,
+  handleRegisterClick,
   loginClick,
   isLoggedIn,
 }) {
   const currentUser = useContext(CurrentUserContext);
   const userName = currentUser?.name;
 
-  const firstLetter = currentUser?.name?.charAt(0).toUpperCase() || "?";
+  const firstLetter = currentUser?.name?.charAt(0).toUpperCase() || "";
 
   const avatarSet = !!currentUser?.avatar;
 
@@ -50,7 +48,7 @@ function Header({
             <div className="header__user">
               <p className="header__user_name">Hello, {userName}!</p>
               <img
-                src={avatarSet ? userIcon : firstLetter}
+                src={avatarSet ? currentUser.avatar : firstLetter}
                 alt="User Icon"
                 className="header__user_icon"
               />
@@ -61,7 +59,7 @@ function Header({
         <div className="header__not-signed-in">
           <button
             type="button"
-            onClick={registerClick}
+            onClick={handleRegisterClick}
             className="header__signup"
           >
             Sign Up

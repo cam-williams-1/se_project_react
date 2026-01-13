@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "../../hooks/useForm";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
@@ -13,7 +13,7 @@ const LoginModal = ({
     password: "",
   });
   // values are from state and function from useForm.js
-  const { values, handleChange, setValues } = useForm(formData);
+  const { values, handleChange } = useForm(formData);
 
   // useEffect(() => {
   //   if (isOpen) {
@@ -39,27 +39,27 @@ const LoginModal = ({
       closeActiveModal={closeActiveModal}
       onSubmit={handleSubmit}
     >
-      <label htmlFor="email" className="modal__label">
+      <label htmlFor="login-email" className="modal__label">
         Email {/* add form validation later */}
         <input
           required
-          type="text"
+          type="email"
           name="email"
           className="modal__input"
-          id="email"
+          id="login-email"
           placeholder="Email"
           value={values.email}
           onChange={handleChange}
         />
       </label>
-      <label htmlFor="password" className="modal__label">
+      <label htmlFor="login-password" className="modal__label">
         Password{" "}
         <input
           required
-          type="text"
+          type="password"
           name="password"
           className="modal__input"
-          id="password"
+          id="login-password"
           placeholder="Password"
           value={values.password} // does this need to be hashed??
           onChange={handleChange}

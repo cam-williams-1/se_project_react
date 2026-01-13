@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 // for more sensitive applications, storing the apiKey here is a security risk
 import { coordinates, apiKey } from "../../utils/constants";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
@@ -94,7 +94,6 @@ function App() {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
     setCurrentUser({});
-    setClothingItems([]);
     closeActiveModal();
   };
 
@@ -136,7 +135,7 @@ function App() {
     setActiveModal("add-garment");
   };
 
-  const registerClick = () => {
+  const handleRegisterClick = () => {
     setActiveModal("register");
   };
 
@@ -245,7 +244,7 @@ function App() {
             <Header
               handleAddClick={handleAddClick}
               weatherData={weatherData}
-              registerClick={registerClick}
+              handleRegisterClick={handleRegisterClick}
               loginClick={loginClick}
               isLoggedIn={isLoggedIn}
             />

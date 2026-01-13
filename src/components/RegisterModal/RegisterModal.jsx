@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "../../hooks/useForm";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
@@ -16,7 +16,7 @@ const RegisterModal = ({
   });
 
   // values are from state and function from useForm.js
-  const { values, handleChange, setValues } = useForm(formData);
+  const { values, handleChange } = useForm(formData);
 
   // useEffect(() => {
   //   if (isOpen) {
@@ -40,53 +40,53 @@ const RegisterModal = ({
       closeActiveModal={closeActiveModal}
       onSubmit={handleSubmit}
     >
-      <label htmlFor="email" className="modal__label">
+      <label htmlFor="register-email" className="modal__label">
         Email {/* add form validation later */}
         <input
           required
           type="email"
           name="email"
           className="modal__input"
-          id="email"
+          id="register-email"
           placeholder="Email"
           value={values.email}
           onChange={handleChange}
         />
       </label>
-      <label htmlFor="password" className="modal__label">
+      <label htmlFor="register-password" className="modal__label">
         Password{" "}
         <input
           required
-          type="text"
+          type="password"
           name="password"
           className="modal__input"
-          id="password"
+          id="register-password"
           placeholder="Password"
           value={values.password}
           onChange={handleChange}
         />
       </label>
-      <label htmlFor="name" className="modal__label">
+      <label htmlFor="register-name" className="modal__label">
         Name{" "}
         <input
           required
           type="text"
           name="name"
           className="modal__input"
-          id="name"
+          id="register-name"
           placeholder="Name"
           value={values.name}
           onChange={handleChange}
         />
       </label>
-      <label htmlFor="avatar" className="modal__label">
+      <label htmlFor="register-avatar" className="modal__label">
         Avatar URL{" "}
         <input
           required
           type="url"
           name="avatar"
           className="modal__input"
-          id="avatar"
+          id="register-avatar"
           placeholder="Avatar URL"
           value={values.avatar}
           onChange={handleChange}

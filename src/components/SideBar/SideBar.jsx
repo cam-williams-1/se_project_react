@@ -13,7 +13,11 @@ export default function SideBar({ onEditProfile, handleLogout }) {
   return (
     <aside className="sidebar">
       <div className="sidebar__user">
-        <img src={userIcon} alt="User Icon" className="sidebar__user_icon" />
+        <img
+          src={currentUser.avatar || userIcon}
+          alt="User Icon"
+          className="sidebar__user_icon"
+        />
         <p className="sidebar__user_name">{userName}</p>
       </div>
       <div className="siderbar__btns">
