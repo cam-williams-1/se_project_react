@@ -14,9 +14,7 @@ function Header({
   weatherData,
   registerClick,
   loginClick,
-  handleLogout,
   isLoggedIn,
-  onEditProfile, // for editing profile.. not sure where to implement yet
 }) {
   const currentUser = useContext(CurrentUserContext);
   const userName = currentUser?.name;
@@ -38,7 +36,7 @@ function Header({
       <p className="header__date-location">
         {currentDate}, {weatherData.city}
       </p>
-      <ToggleSwitch />
+      <ToggleSwitch isLoggedIn={isLoggedIn} />
       {isLoggedIn ? (
         <>
           <button
@@ -60,7 +58,7 @@ function Header({
           </NavLink>
         </>
       ) : (
-        <>
+        <div className="header__not-signed-in">
           <button
             type="button"
             onClick={registerClick}
@@ -71,7 +69,7 @@ function Header({
           <button type="button" onClick={loginClick} className="header__login">
             Log In
           </button>
-        </>
+        </div>
       )}
     </header>
   );

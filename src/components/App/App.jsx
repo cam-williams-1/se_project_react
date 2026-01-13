@@ -164,6 +164,16 @@ function App() {
     setActiveModal("");
   };
 
+  const changeToLogin = () => {
+    closeActiveModal();
+    setActiveModal("login");
+  };
+
+  const changeToRegister = () => {
+    closeActiveModal();
+    setActiveModal("register");
+  };
+
   const deleteItemHandler = (item) => {
     const filteredArr = clothingItems.filter((clothingItem) => {
       return clothingItem._id !== item._id;
@@ -284,18 +294,20 @@ function App() {
           />
           <RegisterModal
             isOpen={activeModal === "register"}
-            onClose={closeActiveModal}
+            closeActiveModal={closeActiveModal}
             onRegister={handleRegister} // Pass the function here
+            changeToLogin={changeToLogin}
           />
           <LoginModal
             isOpen={activeModal === "login"}
-            onClose={closeActiveModal}
+            closeActiveModal={closeActiveModal}
             onLogin={handleLogin} // Pass the function here
+            changeToRegister={changeToRegister}
           />
         </div>
         <EditProfileModal
           isOpen={activeModal === "edit-profile"}
-          onClose={closeActiveModal}
+          closeActiveModal={closeActiveModal}
           onUpdateUser={handleUpdateUser}
         />
       </CurrentUserContext.Provider>

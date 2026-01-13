@@ -1,5 +1,6 @@
 .sidebar {
   width: 229px;
+  position: relative;
 }
 
 .sidebar__user {
@@ -22,4 +23,34 @@
 .sidebar__btns {
   display: flex;
   flex-direction: column;
+}
+
+.sidebar__profile_btn {
+  border: none;
+  background: transparent;
+  position: absolute;
+  top: 70px;
+  font-family: "Cabinet Grotesk";
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.sidebar__profile_btn:hover {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.sidebar__logout_btn {
+  background: transparent;
+  border: none;
+  position: absolute;
+  top: 100px;
+  font-family: "Cabinet Grotesk";
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.sidebar__logout_btn:hover {
+  cursor: pointer;
+  font-weight: 700;
 }

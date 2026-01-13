@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import { useForm } from "../../hooks/useForm";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-const LoginModal = ({ isOpen, onLogin, closeActiveModal }) => {
+const LoginModal = ({
+  isOpen,
+  onLogin,
+  closeActiveModal,
+  changeToRegister,
+}) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -60,6 +65,13 @@ const LoginModal = ({ isOpen, onLogin, closeActiveModal }) => {
           onChange={handleChange}
         />
       </label>
+      <button
+        type="button"
+        onClick={changeToRegister}
+        className="modal__switch-btn"
+      >
+        or Register
+      </button>
     </ModalWithForm>
   );
 };

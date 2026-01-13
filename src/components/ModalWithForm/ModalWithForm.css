@@ -47,6 +47,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
 }
 
 .modal__label {
@@ -98,7 +99,7 @@
 .modal__submit-btn {
   font-family: "Cabinet Grotesk";
   font-weight: 700;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 20px;
   width: 127px;
   padding: 8px 16px;
@@ -128,5 +129,14 @@
 }
 
 .modal__delete-btn:hover {
+  cursor: pointer;
+}
+
+.modal__switch-btn {
+  border: none;
+  background: transparent;
+  position: absolute;
+  left: 144px;
+  bottom: 10px;
   cursor: pointer;
 }

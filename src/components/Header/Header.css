@@ -42,3 +42,38 @@
   color: black;
   text-decoration: none;
 }
+
+.header__not-signed-in {
+  margin-left: auto;
+}
+
+.toggle-switch-right {
+  margin-left: 820px;
+}
+
+.header__signup {
+  gap: 20px;
+  background: transparent;
+  border: none;
+  font-family: "Cabinet Grotesk";
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.header__signup:hover {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.header__login {
+  background: transparent;
+  border: none;
+  font-family: "Cabinet Grotesk";
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.header__login:hover {
+  cursor: pointer;
+  font-weight: 700;
+}

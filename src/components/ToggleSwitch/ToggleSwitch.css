@@ -9,6 +9,17 @@
   cursor: pointer;
 }
 
+.toggle-switch-right {
+  position: relative; /* to position the toggle circle */
+  width: 56px;
+  height: 28px;
+  border: 2px solid #7e7e7e;
+  border-radius: 20px;
+  margin-left: 820px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
 .toggle-switch:hover {
   border: 2px solid #000;
 }

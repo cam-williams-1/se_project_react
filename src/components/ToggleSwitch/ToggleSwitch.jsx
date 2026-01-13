@@ -2,13 +2,13 @@ import { useContext } from "react";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit";
 import "./ToggleSwitch.css";
 
-function ToggleSwitch() {
+function ToggleSwitch({ isLoggedIn }) {
   const { handleToggleSwitchChange, currentTemperatureUnit } = useContext(
     CurrentTemperatureUnitContext
   );
 
   return (
-    <label className="toggle-switch">
+    <label className={isLoggedIn ? "toggle-switch" : "toggle-switch-right"}>
       <input
         onChange={handleToggleSwitchChange}
         type="checkbox"

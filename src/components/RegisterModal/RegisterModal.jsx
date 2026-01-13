@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import { useForm } from "../../hooks/useForm";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-const RegisterModal = ({ isOpen, onRegister, closeActiveModal }) => {
+const RegisterModal = ({
+  isOpen,
+  onRegister,
+  closeActiveModal,
+  changeToLogin,
+}) => {
   const [formData, setFormData] = useState({
     name: "",
     avatar: "",
@@ -26,8 +31,6 @@ const RegisterModal = ({ isOpen, onRegister, closeActiveModal }) => {
 
   // TODO
   // 1. add form validation!
-  // 2. Hash password before sending it to backend ?
-  // 3. should i move handleChange or delete since this is a sign up form?
 
   return (
     <ModalWithForm
@@ -89,7 +92,13 @@ const RegisterModal = ({ isOpen, onRegister, closeActiveModal }) => {
           onChange={handleChange}
         />
       </label>
-      <p>or Login</p>
+      <button
+        type="button"
+        onClick={changeToLogin}
+        className="modal__switch-btn"
+      >
+        or Login
+      </button>
     </ModalWithForm>
   );
 };
