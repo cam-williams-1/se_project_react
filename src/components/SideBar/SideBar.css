@@ -11,6 +11,9 @@
 .sidebar__user_icon {
   width: 56px;
   height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
 }
 
 .sidebar__user_name {

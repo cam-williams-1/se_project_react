@@ -52,4 +52,5 @@
 .card__img {
   width: 100%;
   cursor: pointer;
+  object-fit: cover;
 }

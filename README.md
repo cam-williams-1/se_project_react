@@ -15,13 +15,13 @@
 
 ### Visuals
 
-![Home Page](./src/assets/wtwr-home.png)
+[Home Page](./src/assets/wtwr-home.png)
 
 #### Project Pitch Video
 
 - Here's a short video explaining the functionality of the application and how I created it.
-  -(https://drive.google.com/file/d/1wuWQG0PPqUct55Z6HyYJ7SZLHXo3yOn7/view?usp=sharing)
+  ![Project Pitch](https://drive.google.com/file/d/1wuWQG0PPqUct55Z6HyYJ7SZLHXo3yOn7/view?usp=sharing)
 
 ## Link to Backend Repo
 
-- (https://github.com/cam-williams-1/se_project_express)
+[Back-End Repo](https://github.com/cam-williams-1/se_project_express)

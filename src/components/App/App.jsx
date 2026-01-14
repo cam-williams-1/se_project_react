@@ -65,7 +65,17 @@ function App() {
           localStorage.setItem("jwt", res.token);
           setIsLoggedIn(true);
           setCurrentUser(res.user);
-          closeActiveModal();
+          // Fetch clothing items after login
+          getItems()
+            .then((data) => {
+              const userItems = data.filter((item) => item.owner);
+              setClothingItems(userItems.reverse());
+              closeActiveModal();
+            })
+            .catch((err) => {
+              console.error("Failed to fetch clothing items after login:", err);
+              closeActiveModal();
+            });
         } else {
           throw new Error("No token returned from server");
         }
@@ -94,6 +104,7 @@ function App() {
     localStorage.removeItem("jwt");
     setIsLoggedIn(false);
     setCurrentUser({});
+    setClothingItems([]);
     closeActiveModal();
   };
 
@@ -152,8 +163,12 @@ function App() {
 
     addItem(newCardData)
       .then((data) => {
-        // passing data to state so that it includes the id created from the DB
-        setClothingItems([data, ...clothingItems]);
+        // Ensure the new item has the correct owner field for instant UI update
+        const itemWithOwner = {
+          ...data,
+          owner: data.owner || currentUser._id,
+        };
+        setClothingItems([itemWithOwner, ...clothingItems]);
         closeActiveModal();
       })
       .catch(console.error);
@@ -211,13 +226,18 @@ function App() {
         setWeatherData(filteredData);
       })
       .catch(console.error);
+  }, []); // weather loads on mount
 
-    getItems()
-      .then((data) => {
-        setClothingItems(data.reverse());
-      })
-      .catch(console.error);
-  }, []); // empty array ensures useEffect will call on page load
+  // Fetch clothing items only after user is set and logged in
+  useEffect(() => {
+    if (isLoggedIn && currentUser && currentUser._id) {
+      getItems()
+        .then((data) => {
+          setClothingItems(data.reverse());
+        })
+        .catch(console.error);
+    }
+  }, [isLoggedIn, currentUser]);
 
   useEffect(() => {
     // only adds listener is modal is active
