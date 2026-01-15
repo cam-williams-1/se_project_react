@@ -28,47 +28,55 @@ function Header({
 
   return (
     <header className="header">
-      <NavLink to="/">
-        <img src={headerLogo} alt="App Logo" className="header__logo" />
-      </NavLink>
-      <p className="header__date-location">
-        {currentDate}, {weatherData.city}
-      </p>
-      <ToggleSwitch isLoggedIn={isLoggedIn} />
-      {isLoggedIn ? (
-        <>
-          <button
-            type="button"
-            onClick={handleAddClick}
-            className="header__add-btn"
-          >
-            + Add clothes
-          </button>
-          <NavLink className="header__nav-link" to="/profile">
-            <div className="header__user">
-              <p className="header__user_name">Hello, {userName}!</p>
-              <img
-                src={avatarSet ? currentUser.avatar : firstLetter}
-                alt="User Icon"
-                className="header__user_icon"
-              />
-            </div>
-          </NavLink>
-        </>
-      ) : (
-        <div className="header__not-signed-in">
-          <button
-            type="button"
-            onClick={handleRegisterClick}
-            className="header__signup"
-          >
-            Sign Up
-          </button>
-          <button type="button" onClick={loginClick} className="header__login">
-            Log In
-          </button>
-        </div>
-      )}
+      <div className="header__left">
+        <NavLink to="/">
+          <img src={headerLogo} alt="App Logo" className="header__logo" />
+        </NavLink>
+        <p className="header__date-location">
+          {currentDate}, {weatherData.city}
+        </p>
+      </div>
+      <div className="header__right">
+        <ToggleSwitch isLoggedIn={isLoggedIn} />
+        {isLoggedIn ? (
+          <>
+            <button
+              type="button"
+              onClick={handleAddClick}
+              className="header__add-btn"
+            >
+              + Add clothes
+            </button>
+            <NavLink className="header__nav-link" to="/profile">
+              <div className="header__user">
+                <p className="header__user_name">Hello, {userName}!</p>
+                <img
+                  src={avatarSet ? currentUser.avatar : firstLetter}
+                  alt="User Icon"
+                  className="header__user_icon"
+                />
+              </div>
+            </NavLink>
+          </>
+        ) : (
+          <div className="header__not-signed-in">
+            <button
+              type="button"
+              onClick={handleRegisterClick}
+              className="header__signup"
+            >
+              Sign Up
+            </button>
+            <button
+              type="button"
+              onClick={loginClick}
+              className="header__login"
+            >
+              Log In
+            </button>
+          </div>
+        )}
+      </div>
     </header>
   );
 }
