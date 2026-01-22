@@ -106,6 +106,11 @@ function App() {
     setCurrentUser({});
     setClothingItems([]);
     closeActiveModal();
+    getItems()
+      .then((data) => {
+        setClothingItems(data.reverse());
+      })
+      .catch(console.error);
   };
 
   const handleToggleSwitchChange = () => {
@@ -127,7 +132,7 @@ function App() {
       addCardLike(id, token)
         .then((updatedCard) => {
           setClothingItems((cards) =>
-            cards.map((item) => (item._id === id ? updatedCard : item))
+            cards.map((item) => (item._id === id ? updatedCard : item)),
           );
         })
         .catch((err) => console.log(err));
@@ -135,7 +140,7 @@ function App() {
       removeCardLike(id, token)
         .then((updatedCard) => {
           setClothingItems((cards) =>
-            cards.map((item) => (item._id === id ? updatedCard : item))
+            cards.map((item) => (item._id === id ? updatedCard : item)),
           );
         })
         .catch((err) => console.log(err));
@@ -228,16 +233,25 @@ function App() {
       .catch(console.error);
   }, []); // weather loads on mount
 
-  // Fetch clothing items only after user is set and logged in
+  // Fetch clothingItems on page load, without likes
   useEffect(() => {
-    if (isLoggedIn && currentUser && currentUser._id) {
-      getItems()
-        .then((data) => {
-          setClothingItems(data.reverse());
-        })
-        .catch(console.error);
-    }
-  }, [isLoggedIn, currentUser]);
+    getItems()
+      .then((data) => {
+        setClothingItems(data.reverse());
+      })
+      .catch(console.error);
+  }, []); // will run on mount
+
+  // Fetch clothingItems after user is set and logged in
+  // useEffect(() => {
+  //   if (isLoggedIn && currentUser && currentUser._id) {
+  //     getItems()
+  //       .then((data) => {
+  //         setClothingItems(data.reverse());
+  //       })
+  //       .catch(console.error);
+  //   }
+  // }, [isLoggedIn, currentUser]);
 
   useEffect(() => {
     // only adds listener is modal is active
